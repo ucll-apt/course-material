@@ -1,0 +1,154 @@
+= Assignment
+
+== Imperative vs Declarative
+
+We can distinguish two ways of specifying algorithms:
+
+* The imperative way: a step-by-step description of what to do.
+* The declarative way: a description of what the result should look like, without specifying how to achieve it.
+
+[NOTE,caption='Example']
+====
+
+For example, take the `sqrt` function.
+The code below is imperative because it clearly describes which step to take.
+
+[source,language='python']
+----
+def sqrt(x, precision=0.00000001):
+    # You don't have to read this code, it's only here for completeness
+    lower = 0
+    upper = x
+    while upper - lower > precision:
+        middle = (lower + upper) / 2
+        if middle**2 > x:
+            upper = middle
+        elif middle**2 < x:
+            lower = middle
+        else:
+            return middle
+    return (lower + upper) / 2
+----
+
+A declarative version would be
+
+[source,language='python']
+----
+def sqrt(x):
+    find y >= 0 such that y**2 = x
+----
+====
+
+A declarative version is generally much more succinct, but it requires a really smart compiler (an as of yet nonexisting AI really) for it to be able to compile this to instructions that the CPU can actually execute.
+The `sqrt` function's behavior is unambiguously specified by that single line, so theoretically it _should_ suffice.
+
+You can imagine a client's wishes to be declarative and you as software engineer take on the task of turning that into CPU-compatible imperative code.
+In a sense, by working on developing such a compiler for a perfectly declarative language, we are working on making ourselves obsolete.
+
+== Typing
+
+Typing is declarative, but in most languages, the information that types convey is incredibly limited:
+
+[source,language='c++']
+----
+double sqrt(double x);
+----
+
+From this information alone, it is impossible for even the smartest AI to know how to implement it.
+Keep in mind that the word "sqrt" itself does not mean anything to the AI, it's the types that are meant to explain the meaning of this word.
+An AI would probably come up with the following perfectly valid imperative implementation:
+
+[source,language='c++']
+----
+double sqrt(double x)
+{
+    return x;
+}
+----
+
+Which of course is not what we intended, but it _does_ satisfy the constraints imposed by the types.
+
+Typing is a step towards "real" declarative programming.
+Regrettably, many type systems simply cannot convey enough information to unambiguously describe intended behavior.
+However, this does not mean we should give up: instead, we can try to make the most use of our language's type system and try to describe the solution as well we can.
+
+The purpose of this set of exercises is for you to optimally leverage TypeScript's typesystem so as to put the most constraints as possible on your code.
+The more closely the type describes the intended behavior, the more chance there is that the compiler will catch mistakes.
+
+An expressive type system has many advantages:
+
+* Less chance of bugs while writing code.
+* When having to modify code, the types will act as safeguards.
+  For example, when changing the type of a variable, simply recompiling will lead the compiler to point out all code that needs an update.
+* Typing can make more automated refactorings possible.
+* The compiler can use the types to produce more efficient code.
+* Rust uses its type system to detect memory leaks, dangling references, race conditions, etc.
+
+== Instructions
+
+=== Setup
+
+First, run `npm install` so that all necessary packages are installed.
+
+=== Exercises
+
+Each exercise resides in its own directory.
+Write your solution in a file named `solution.ts`.
+
+[IMPORTANT]
+====
+Don't forget to `export` your solution so that the test files can reach it.
+
+[source,language='typescript']
+----
+export function mySolution() { ... }
+----
+====
+
+=== Running the Tests
+
+There are two kinds of tests:
+
+* The regular tests that give inputs and verify outputs.
+  This aspect however is useless since you are typically given the function's body, so if the code yields wrong results, it cannot be your fault.
+  The actual purpose of these tests is to check that the testing code actually _compiles_.
+  In other words, they ensure that your typing is not too restrictive.
+* The 'negative' tests contain erroneous code.
+  If your typing is too lax, these tests would compile.
+  The goal is that your typing prevent these negative tests from compiling.
+
+To run the tests:
+
+[source,language='bash']
+----
+# Go to directory containing check.py
+$ cd exercises
+
+# Check single exercise
+$ py check.py subdirectory
+
+# Check all exercises
+$ py check.py *
+----
+
+You then get an overview of the tested exercise (`FAIL` vs `PASS`).
+If all tests passed, `SUCCESS` will be printed at the end.
+
+[IMPORTANT]
+====
+Do not be alarmed by compilation errors that could appear: these are simply due to the negative tests.
+====
+
+[IMPORTANT]
+====
+Passing tests does not necessarily mean that the exercise was solved correctly.
+====
+
+=== Submission
+
+Run `collect-solutions.py`.
+This creates a zip file with all your `solution.ts` files in it.
+Upload this zip file to Toledo.
+
+It is advised that you redownload this zip from Toledo and check that everything is in order.
+

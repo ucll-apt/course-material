@@ -1,0 +1,17 @@
+= Assignment
+
+You are interested in all versions of `file.txt` in the given repo.
+Fetch every version and put it in files named `file-N.txt` where `N` represents the Nth version, starting at 1.
+
+Say there have been made 20 changes to `file.txt` during the repo's lifetime.
+
+* Look for the oldest commit involving `file.txt`.
+  Ask the contents of `file.txt` in that commit and write it to `file-1.txt`.
+* Then look for the second oldest commit involving `file.txt` and write the contents of that version to `file-2.txt`.
+* And so on until the end.
+
+[IMPORTANT]
+====
+The repo contains commits that do not involve `file.txt`.
+These commits should be ignored.
+====

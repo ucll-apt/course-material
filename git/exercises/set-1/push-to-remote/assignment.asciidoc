@@ -1,0 +1,8 @@
+# Assignment
+
+The directory `sandbox` (which does _not_ contain a Git repository) contains a subdirectory `local` (which _does_ contain a Git repository).
+
+* Create a second (bare) repository under `sandbox/remote`.
+* In ``local``, add ``remote`` as a remote and name it `origin`.
+* Push ``local``'s `master` branch to the repository in ``remote``.
+* Inside `local`, make sure its `master` branch tracks `origin/master`.

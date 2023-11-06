@@ -1,0 +1,21 @@
+= Assignment
+
+`xs.maxBy(keyFunction)` looks for the `x` in `xs` for which `keyFunction` returns the highest value.
+In case of a tie, the leftmost `x` is returned.
+
+== Example
+
+Say we have a list of children and we to find the oldest.
+
+[source,language='javascript']
+----
+[ { name: "John", age: 8 }
+, { name: "Sophie", age: 9 }
+, { name: "Peter", age: 8 }
+, { name: "Scott", age: 8 }
+, { name: "Anna", age: 7 }
+, { name: "Emma", age: 9 }
+ ].maxBy(child => child.age)
+----
+
+should return `{ name: "Sophie", age: 9 }`.

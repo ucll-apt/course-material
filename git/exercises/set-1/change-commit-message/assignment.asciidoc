@@ -1,0 +1,7 @@
+= Assignment
+
+You are given a repo `sandbox` in which someone added a file `a.txt` but committed it with a wrong message.
+He intended to write `added a.txt` but instead wrote `added q.txt`.
+
+Fix this mistake using a single command that allows you to directly rewrite a commit message.
+In other words, don't undo and redo the last commit, but instead _modify_ it.

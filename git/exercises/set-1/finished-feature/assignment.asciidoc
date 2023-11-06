@@ -1,0 +1,8 @@
+= Assignment
+
+The given repo has two branches: `master` and `feature`.
+Everything has also been pushed to a remote repo.
+
+* Merge the changes made on the `feature` branch to the `master` branch.
+* Push this new state to the remote repo.
+* Remove the `feature` branch both locally and remotely.

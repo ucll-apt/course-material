@@ -1,0 +1,64 @@
+= Assignment
+
+== Tuples vs Arrays
+
+Tuples and arrays are very similar: both represent a list of items.
+The main difference could be said to be their length:
+
+* An array's length is not known at compile time.
+* A tuple's length is known at compile time.
+
+This has consequences regarding typing.
+
+* Since an array can contain an arbitrary number of items, it is impossible to specify their types at compile time.
+  The only possibility is to demand all elements have the same type, e.g., `number[]`.
+  Then, regardless of which item we pick, we know it must be a `number`.
+* For tuples it is possible to specify the type of each element, e.g., `[number, boolean]`.
+  Here, we have exactly two elements.
+  `pair[0]` is known to be a `number`, while `pair[1]` is a `boolean`.
+
+JavaScript, and by extension TypeScript, does not have tuples as a separate kind of value.
+Only arrays exist.
+
+However, we _can_ use arrays as tuples.
+TypeScript allows to assign two different types to arrays:
+
+* `T[]` represents a regular array containing values of type `T`.
+* `[T1, T2]` represents a pair of values of types `T1` and `T2`, respectively.
+
+== Problem Statement
+
+We represent time-of-days as `[h, m]`, i.e., an array containing
+
+* the hour as first element and
+* the minutes as second element.
+
+Next, we represent a meeting as `[description, startTime, endTime]`, again an array.
+
+* The first element is a short description of the meeting (`string`).
+* The second element is the start time of the meeting (represented by a date-of-time array as explained above.)
+* The third element is the end time of the meeting (represented by a date-of-time array as explained above.)
+
+So, the full structure is `[description, [startHours, startMinutes], [endHours, endMinutes]]`.
+
+We now want to define a function that counts the number of minutes a given meeting takes:
+
+[source,language='javascript']
+----
+function duration([_, [sh, sm], [eh, em]])
+{
+    return (eh * 60 + em) - (sh * 60 - sm);
+}
+----
+
+Add types to this function.
+The compiler should check the following:
+
+* The return type should be a `number`.
+* The parameter should be a valid meeting, i.e., have the exact shape described above.
+  No more or less elements than necessary are allowed and each must have the right type.
+
+[TIP]
+====
+* If the syntax of the JavaScript code confuses you, look up "destructuring assignment".
+====

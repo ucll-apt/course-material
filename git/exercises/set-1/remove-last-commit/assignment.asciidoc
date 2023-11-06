@@ -1,0 +1,16 @@
+= Assignment
+
+We accidentally committed a file `password.txt` that contains our password!
+Undo this last commit completely.
+
+* The last commit must be removed altogether from master's history.
+* Remove all traces of the last commit from the reflog.
+* `password.txt` must be removed from both the staging area and working area.
+
+[IMPORTANT]
+====
+Realize that this is still not enough to ensure `password.txt` has been removed from the repository.
+It's very hard to know for sure it's really gone.
+
+The only way I would personally trust is to completely start over with a new repository.
+====

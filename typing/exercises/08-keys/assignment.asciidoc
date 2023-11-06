@@ -1,0 +1,38 @@
+= Assignment
+
+Add typings to the function `setting`.
+
+[source,language='javascript']
+----
+/*
+    Must be kept private, because this data should be read from file.
+*/
+const settings = {
+    path: 'c:/somewhere',
+    minimum: 1,
+    verbose: true
+}
+
+function setting(key)
+{
+    return settings[key];
+}
+----
+
+== Parameter key
+
+The `key` parameter must be one of the keys in settings, i.e., `"path"`, `"minimum"` or `"verbose"`.
+Don't hardcode: if I were to add extra key/value pairs to settings, the function `setting` should still work without needing any changes.
+
+== Return Value
+
+``setting``'s return type should depend on the parameter given.
+For example, `setting('path')` should return a `string`, `setting('minimum')` a `number`, etc.
+In other words, you have to find a way to relate the return type to its parameter.
+
+[TIP]
+====
+* `keyof`
+* `typeof`
+* Indexed Access Types
+====

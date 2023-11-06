@@ -1,0 +1,23 @@
+= Assignment
+
+Create a generator `repeat` that can be used in the following way:
+
+[source,language='python']
+----
+iterator = repeat(5)
+
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+# goes on at infinitum
+----
+
+[NOTE]
+====
+`repeat` already exists in `itertools`.
+It speaks for itself you should implement your own version here, but in the future, please make use of the library implementation.
+====

@@ -1,0 +1,29 @@
+= Assignment
+
+Add typings to the function shown below.
+
+[source,language='javascript']
+----
+function fillDefaults(obj, defaults)
+{
+    return { ...defaults, ...obj };
+}
+----
+
+Let's say we have a type
+
+[source,language='typescript']
+----
+type Foo = { a : number, b ?: boolean };
+----
+
+* `obj` must be a potentially incomplete `Foo`: it is allowed to lack any of the fields, including `a`.
+* `defaults` must be a complete `Foo` and contain _all_ fields.
+  In the example, `defaults` must contain both `a` and `b`.
+* The result is guaranteed to be a complete `Foo`.
+  In the example, the return value must contain both `a` and `b`.
+
+[TIP]
+====
+Look for TypeScript's utility types.
+====

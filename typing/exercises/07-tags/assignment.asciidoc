@@ -1,0 +1,67 @@
+= Assignment
+
+Say we have circles and squares:
+
+[source,language='javascript']
+----
+const circle = { radius: 5.0 };
+
+const square = { side: 4.0 };
+----
+
+We wish to be able to compute their areas using a function `area(shape)`.
+This function needs to be able to determine whether its argument is a circle or a square.
+While it could check for the presence of a `radius` or `side` field, this is rather fragile: what it we also have spheres?
+These would also have a `radius` field and thereby be confused with circles.
+
+Instead of relying on the presence/absence of certain fields, we add a tag:
+
+[source,language='javascript']
+----
+const circle = { tag: 'circle', radius: 5.0 };
+
+const square = { tag: 'square', side: 4.0 };
+----
+
+This `tag` field basically represents the type of the object at runtime.
+However, we would like this runtime value to be used as a way to determine the type at compile-time:
+
+[source,language='javascript']
+----
+// shape has unknown type at this point
+
+if ( shape.tag === 'circle ')
+{
+    // shape's type is upgraded to circle
+    // the compiler now allows us to ask for its radius
+}
+----
+
+Define three types named `Shape`, `Circle` and `Square`.
+
+* `Shape` should be a supertype of `Circle` and `Square`.
+* `Shape` should only have a `tag` field.
+* `Circle` adds a `radius` field of type `number`.
+* `Square` adds a `side` field of type `number`.
+
+Next, add typings to the function below:
+
+[source,language='javascript']
+----
+function area(shape)
+{
+    switch ( shape.tag )
+    {
+    case 'circle':
+        return shape.radius ** 2 * Math.PI;
+
+    case 'square':
+        return shape.side ** 2;
+    }
+}
+----
+
+[TIP]
+====
+Tagged Union Types
+====

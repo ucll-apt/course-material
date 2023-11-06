@@ -1,0 +1,39 @@
+= Assignment
+
+`xs.groupBy(keyFunction)` creates a https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map[`Map`] where all values `x` of `xs` with the same value `keyFunction(x)` are grouped together.
+
+== Example
+
+Say we have a list of children and we want to group them by age.
+
+[source,language='javascript']
+----
+[ { name: "John", age: 8 }
+, { name: "Sophie", age: 9 }
+, { name: "Peter", age: 8 }
+, { name: "Scott", age: 8 }
+, { name: "Anna", age: 7 }
+, { name: "Emma", age: 9 }
+ ].groupBy(child => child.age)
+----
+
+should return the map
+
+[source,language='javascript']
+----
+Map
+{
+    7 => [
+        { name: "Anna", age: 7 }
+    ],
+    8 => [
+        { name: "John", age: 8 },
+        { name: "Peter", age: 8 },
+        { name: "Scott", age: 8 }
+    ],
+    9 => [
+        { name: "Sophie", age: 9 },
+        { name: "Emma", age: 9 }
+    ]
+}
+----

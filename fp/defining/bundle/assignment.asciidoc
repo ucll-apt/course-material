@@ -1,0 +1,18 @@
+= Assignment
+
+`xs.bundle(keyFunction)` looks for consecutive elements that yield the same key and groups them together in lists.
+The result is a list of lists.
+
+== Example
+
+We consider `[2,4,2,3,9,2,5].bundle(x => x % 2)`.
+Let's compute all the key values, i.e., we apply the given function on each element of the array.
+We get `[0,0,0,1,1,0,1]`.
+
+* The first three elements all have `0` as key value, so these go in one bundle.
+* The next two elements both have key `1`, so they also belong together.
+* The sixth element has again key `0`.
+  This is not added to the first bundle: instead, it gets its own bundle.
+* Same reasoning for the last element.
+
+The end result is `[[2,4,2], [3,9], [2], [5]]`.

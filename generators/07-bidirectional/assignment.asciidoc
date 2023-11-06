@@ -1,0 +1,108 @@
+= Assignment
+
+== Generalizing Generators
+
+An iterator is an object that yields a (potentially infinite) sequence of items.
+It can be seen as a 'data source', something from which information originates.
+The client asks for the next piece of information using `next(iterator)`, and the iterator object will `yield` it.
+The information flow is therefore unidirectional, in that it flows from the iterator (the data source) to the client (the data consumer).
+In essence, the iterator is holding a monologue: it recites all its items one after the other.
+
+However, it needn't be this way.
+When using generators, we can establish a bidirectional flow of information, i.e., let the client send back information.
+The monologue has become a dialogue.
+
+=== Example
+
+Let's clarify this with an example.
+
+[source,language='python']
+----
+def counter():
+    current = 0
+    while True:
+        yield current
+        current += 1
+----
+
+This generator produces all integers starting from `0`, and there's no way of influencing this sequence.
+Say we want to upgrade our counter: we want to be able to skip certain numbers, saying "now instead of incrementing by one, increment by five."
+
+[source,language='python']
+----
+def counter():
+    current = 0
+    while True:
+        increment = yield current
+        current += increment
+----
+
+Originally, we considered `yield` to be a fancy `return`, a simple way of passing information to the caller.
+But now, `yield` actually also evaluates to a value, which we store in `increment`.
+Where does this value come from?
+Let's see it from the client code's viewpoint:
+
+[source,language='python']
+----
+c = counter()
+
+print(next(c))    # 0
+print(c.send(1))  # 1
+print(c.send(2))  # 3
+print(c.send(3))  # 6
+----
+
+Let's examine this in detail:
+
+* First we create a generator.
+  Nothing much to it.
+* We ask it for its first value using `next(c)`.
+  This gives us `0`, as that is indeed the first value that the generator yields.
+* `c.send(1)` causes `yield current` to evaluate to `1`, causing `increment` to be set to 1.
+  This value is added `current`, making it equal to `1`.
+  The generator continues its execution until its next `yield`, where it yields the value of `current`, i.e., `1`.
+  Control goes back to the client, where `send` returns this value `1`.
+* The client sends `2`.
+  Execution goes back to the generator, which adds this `2` to `current`, making it `3`.
+  This new value is ``yield``ed and makes it back to the client, causing it to print `3`.
+* Lastly, the client sends `3`.
+  The generator's `yield` again receives this value and it is added to `current`.
+  The result is again sent back to the client, which prints `6` as a result.
+
+[NOTE]
+====
+You might notice our first interaction with the generator is `next` after which we always use `send`.
+This is due to the fact that a newly created generator needs to be "kick-started": it needs to run to its first `yield`, which produces a value.
+This value is received using `next(c)`.
+After that, we need the `yield` inside the generator to evaluate to a value, which is where `send` comes in.
+
+Note also that `next(c) and `c.send(None)` are synonymous.
+Not kick-starting the generator will cause an error:
+
+[source,language='python']
+----
+c = counter()
+c.send(1)
+# TypeError: can't send non-None value to a just-started generator
+----
+====
+
+== Assignment
+
+Write a generator `counter` that keeps track of two numbers, let's call them `a` and `b`.
+Whenever `true` is sent to the generator, it increments `a`.
+Similarly, sending `false` increments `b`.
+The generator yields the  `(a, b)`.
+
+[source,language='python']
+----
+c = counter()
+
+next(c)        # (0, 0)
+c.send(True)   # (1, 0)
+c.send(True)   # (2, 0)
+c.send(False)  # (2, 1)
+c.send(False)  # (2, 2)
+c.send(False)  # (2, 3)
+c.send(True)   # (3, 3)
+----

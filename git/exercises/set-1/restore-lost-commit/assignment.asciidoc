@@ -1,0 +1,4 @@
+= Assignment
+
+Someone accidentally removed the last commit using `git reset --hard`.
+It's up to you to restore the repo to its former glory.

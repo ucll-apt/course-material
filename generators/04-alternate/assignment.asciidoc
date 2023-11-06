@@ -1,0 +1,19 @@
+= Assignment
+
+Create a generator `alternate` that receives two iterators and merges them into a single iterable by alternating between both:
+
+[source,language='python']
+----
+xs = iter([1, 2, 3])
+ys = iter(['a', 'b', 'c'])
+
+iterator = alternate(xs, ys)
+
+print(next(iterator))  # 1
+print(next(iterator))  # 'a'
+print(next(iterator))  # 2
+print(next(iterator))  # 'b'
+print(next(iterator))  # 3
+print(next(iterator))  # 'c'
+print(next(iterator))  # StopIteration
+----

@@ -1,0 +1,28 @@
+= Assignment
+
+We're making a sudoku solver.
+A single cell contains a number ranging from `1` to `9`.
+At first, we don't know which number, so we simply list all possibilities in an array: `[1,2,3,4,5,6,7,8,9]`.
+As the solving goes on, we can eliminate certain numbers from this list.
+A cell is solved when only one number remains.
+
+Add typing to the following function, which removes a number `n` from an array `ns`:
+
+[source,language='javascript']
+----
+function remove(ns, n)
+{
+    return ns.filter(x => x !== n);
+}
+----
+
+[IMPORTANT]
+====
+The numbers in `ns` and `n` should range between `1` and `9`.
+In other words, the compiler should prevent you from passing any other number.
+====
+
+[TIP]
+====
+You will need to combine union types and literal types.
+====

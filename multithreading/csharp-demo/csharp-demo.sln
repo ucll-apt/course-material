@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syncdemo", "syncdemo\syncdemo.csproj", "{4062848C-F4A8-4BF5-B1AA-C2E1C1FC52BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bankdemo", "bankdemo\bankdemo.csproj", "{1A73E6BE-A7CF-475B-ACBA-C2DF83FA1F74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4062848C-F4A8-4BF5-B1AA-C2E1C1FC52BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4062848C-F4A8-4BF5-B1AA-C2E1C1FC52BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4062848C-F4A8-4BF5-B1AA-C2E1C1FC52BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4062848C-F4A8-4BF5-B1AA-C2E1C1FC52BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A73E6BE-A7CF-475B-ACBA-C2DF83FA1F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A73E6BE-A7CF-475B-ACBA-C2DF83FA1F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A73E6BE-A7CF-475B-ACBA-C2DF83FA1F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A73E6BE-A7CF-475B-ACBA-C2DF83FA1F74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4793A257-02A3-47CB-82C5-6809F8F3E3B0}
+	EndGlobalSection
+EndGlobal

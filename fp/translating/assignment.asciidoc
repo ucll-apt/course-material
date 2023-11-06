@@ -1,0 +1,279 @@
+= Assignment
+
+For this set of exercises, you are given an imperative algorithm which you will have to translate into a functional algorithm, relying on higher order functions such as `map`, `select`, etc. to achieve the desired functionality.
+The programming language used is Ruby.
+
+For each exercise, you are given a file `tests.rb`.
+This file contains
+
+* an imperative implementation;
+* tests that compares this imperative implementation to your functional implementation.
+
+Solve each exercise by create a file `solution.rb` and adding a function called `functional` in it.
+This function needs to behave the same as the given imperative function.
+
+== Rules
+
+=== No State
+
+Your implementation must in no way rely on state.
+Mutations of any kind are disallowed.
+
+[source,language='ruby']
+----
+i = 0      # Ok
+i += 1     # Mutation, not ok
+
+x = 1     # Ok
+x = 2     # Second assignment to same variable, not ok
+----
+
+=== Higher Order Functions
+
+You will have to rely on methods provided by
+
+* https://ruby-doc.org/core-3.0.2/Array.html[Array]: lists.
+* https://ruby-doc.org/core-3.0.2/Hash.html[Hash]: key/value pairs.
+* https://ruby-doc.org/core-3.0.2/Enumerable.html[Enumerable] is a <<#mixins,mixin>>. Know that these methods are available to you both in arrays and hashes.
+
+[NOTE,caption="important"]
+====
+One of the goals of this set of exercises is to make you look for functionality that is already implemented for you.
+All too many students keep reinventing the wheel.
+Make sure to take some time to familiarize yourself with Ruby's library.
+====
+
+=== Single Expression
+
+Your solution must consists of a single expression, i.e., a chain of method calls:
+
+[source,language='ruby']
+----
+# Wrong
+ys = xs.map    { |x| x * 2 }
+zs = ys.select { |x| x > 0 }
+return zs
+
+# Right
+xs.map    { |x| x * 2 }
+  .select { |x| x > 0 }
+----
+
+[NOTE]
+====
+No `return` is necessary: all Ruby function automatically return the result of evaluation of the last evaluation.
+====
+
+== Ruby Syntax
+
+The goal of the exercise is to rely on functions like `map`, `select`, and so on.
+These are _higher order functions_, i.e., these are functions accepting functions as parameters.
+Ruby strongly encourages you to use higher order functions:
+
+* The standard library comes with many higher order functions;
+* Ruby offers a specialized syntax to pass functions as parameters.
+
+Typically, parameters are placed within the parentheses enclosing the parameter list.
+
+[source,language='python']
+----
+# Python
+filter(h, reduce(g, map(f, lst), 0))
+----
+
+When combining multiple higher order functions, the syntax quickly devolves into a mess.
+For this reason, Ruby uses the following syntax:
+
+[source,language='ruby']
+----
+# Ruby
+lst.map do |x|
+  ...
+end.reduce(0) do |x|
+  ...
+end.select do |x|
+  ...
+end
+----
+
+Here, it is much clearer which parameters belong to which method.
+The order of the operations is also much easier to make out.
+
+.Select Example
+[%collapsible]
+====
+[EXAMPLE]
+=====
+[source,language='ruby']
+----
+[1, 2, 3].select do |x|
+  # odd? is a method that checks if the number is true
+  # Ruby allows a question mark at the end of method names
+  x.odd?
+end
+# [1, 3]
+
+# Same but shorter
+[1, 2, 3].select { |x| x.odd? }
+----
+=====
+====
+
+.Map Example
+[%collapsible]
+====
+[EXAMPLE]
+=====
+[source,language='ruby']
+----
+[1, 2, 3].map do |x|
+  x * 2
+end
+# [2, 4, 6]
+
+# Same but shorter, { } typically only used for single lined bodies
+[1, 2, 3].map { |x| x * 2 }
+----
+=====
+====
+
+.Destructuring Example
+[%collapsible]
+====
+[EXAMPLE]
+=====
+[source,language='ruby']
+----
+# Look for pair with greatest second value
+[[1, 2], [3, 4], [5, 6]].max_by do |pair|
+  pair[1]
+end
+# [5, 6]
+
+# Array elements can be automatically destructured
+[[1, 2], [3, 4], [5, 6]].max_by do |x, y|
+  y
+end
+----
+=====
+====
+
+[#mixins]
+== Mixins
+
+A _mixin_ is a set of methods that can be "imported" into a class.
+https://ruby-doc.org/core-3.0.2/Enumerable.html[`Enumerable`] is an example of a mixin: it includes methods such as `filter`, `all?`, `any?`, etc.
+If you make a new collection class, you can include `Enumerable` and get all these methods for free.
+
+[source,language='ruby']
+----
+module MyMixin
+  def foo
+    puts('Hello!')
+  end
+end
+
+class MyClass
+  include MyMixin
+end
+
+object = MyClass.new
+object.foo # prints 'Hello!'
+----
+
+.Comparable Example
+[%collapsible]
+====
+[EXAMPLE]
+=====
+Consider the operators `<`, `>`, `<=`, `>=`, `==` and `!=`.
+Implementing all of them for every class for which it makes sense is a lot of work.
+Instead, we can choose to only implement a single method, say `compare`, and then have all the operators rely on this `compare` method:
+
+[source,language="ruby"]
+----
+module Comparable
+  def <(other)
+    self.compare(other) < 0
+  end
+
+  def <=(other)
+    self.compare(other) <= 0
+  end
+
+  def >(other)
+    self.compare(other) > 0
+  end
+
+  def >=(other)
+    self.compare(other) >= 0
+  end
+
+  def ==(other)
+    self.compare(other) == 0
+  end
+
+  def !=(other)
+    self.compare(other) != 0
+  end
+end
+----
+
+Say we want to define a class `Angle` whose objects can be compared.
+We can get all the comparison operators by simply defining `compare` and including `Comparable`, as shown below:
+
+[source,language="ruby"]
+----
+class Angle
+  # ...
+
+  include Comparable
+
+  def compare(other)
+    self.in_radians - other.in_radians
+  end
+end
+----
+
+[NOTE]
+======
+In reality, the `compare` method is named `<=>` in Ruby: `x <=> y` yields the same result as our `x.compare(y)`.
+======
+=====
+====
+
+Adding new methods to a mixin causes all classes that include that mixin to also get those methods.
+
+[source,language='ruby']
+----
+# This "reopens" MyMixin, allowing us to add more methods
+module MyMixin
+  def bar
+    puts('Goodbye!')
+  end
+end
+
+# object now has an extra method bar
+object.bar # prints 'Goodbye!'
+----
+
+.Extending Mixin Example
+[%collapsible]
+====
+[EXAMPLE]
+=====
+It is possible to extend a any mixin as follows:
+
+[source,language="ruby"]
+----
+module Comparable
+  def between?(lower, upper)
+    lower <= self and self <= upper
+  end
+end
+----
+
+All `Comparable` objects now have a `between?` method.
+You can extend all modules (mixins) and classes like this, even built-in ones such as `Array`, `Enumerable`, `String`, `Integer`, etc.
+=====
+====

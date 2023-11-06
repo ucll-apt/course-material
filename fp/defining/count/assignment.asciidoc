@@ -1,0 +1,7 @@
+= Assignment
+
+`xs.count(predicate)` returns the number of elements for which the given function `predicate` returns `true`.
+
+== Example
+
+`[-5,2,-3,1].count(x => x >= 0)` returns `2`, i.e., the number of positive numbers.

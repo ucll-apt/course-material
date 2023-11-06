@@ -1,0 +1,31 @@
+= Assignment
+
+Write a generator `play()` that implements an AI for the game higher-lower.
+The goal of this game is to guess a secret number (chosen by the player).
+
+The interaction with this AI should go as follows:
+
+[source,language='python']
+----
+# Our secret number is 43
+
+# Create the AI
+ai = play()
+
+# Ask for first guess
+next(ai)   # returns 50
+
+# Tell the AI our secret number is lower using send.
+# This also immediately returns the AI's next guess, 25.
+ai.send('lower')   # returns 25
+
+# Tell the AI to guess higher.
+ai.send('higher')  # return 37
+
+# Tell the AI to guess higher.
+ai.send('higher')  # return 43
+
+# The AI's last guess was correct.
+----
+
+Your AI must be able to guess all possible numbers ranging from `1` to `100` using a maximum of 6 guesses for each number.

@@ -1,0 +1,34 @@
+= Assignment
+
+Add typings to the function shown below.
+
+[source,language='javascript']
+----
+function checkUniqueness(xs)
+{
+    const ids = new Set();
+
+    for ( const { id } of xs )
+    {
+        if ( ids.has(id) )
+        {
+            return false;A
+        }
+        else
+        {
+            ids.add(id);
+        }
+    }
+
+    return true;
+}
+----
+
+`xs` should be an array of objects.
+These objects can each have a different shape (e.g., some objects represent dates, other people, other addresses, and so on) but they must have one thing in common: they must all have a field `id` mapped to a `number`.
+
+[TIP]
+====
+* Object types.
+* Structural subtyping.
+====

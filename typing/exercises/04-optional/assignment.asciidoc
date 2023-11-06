@@ -1,0 +1,35 @@
+= Assignment
+
+Add typings to the function shown below.
+
+[source,language='javascript']
+----
+function fillDefaults({ x = 5, b = true, s = 'xyz' })
+{
+    return { x, b, s };
+}
+----
+
+Imagine we have an object with keys `x`, `b` and `s`, mapped to a `number`, `boolean` and `string`, respectively.
+Some of the key/value pairs might be missing though.
+The purpose of `fillDefaults` is to add the missing key/value pairs using default values: given an object it will
+
+* if `x` is missing, add `x` and map it to `5`;
+* if `b` is missing, add `b` and map it to `true`;
+* if `s` is missing, add `s` and map it to `xyz`.
+
+The result is always returned as a new object: the original object remains untouched.
+
+Typing wise, we want `fillDefaults` to only accept objects where
+
+* if there is a key `x`, it must be mapped to a `number`;
+* if there is a key `b`, it must be mapped to a `boolean`;
+* if there is a key `s`, it must be mapped to a `string`.
+
+More key/value pairs are allowed and will simply be dropped.
+
+[TIP]
+====
+* Optional properties.
+* Structural subtyping.
+====

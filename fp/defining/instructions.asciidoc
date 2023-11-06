@@ -1,0 +1,214 @@
+= Instructions
+
+== Instructions
+
+Each exercise resides in its own directory.
+Read the assignment and write your solution in a file named `solution.js`.
+As the extension suggests, you'll have to use JavaScript for these exercises.
+
+You can run the tests using
+
+[source,language='bash']
+----
+$ node tests.js
+----
+
+=== Submitting
+
+Run the provided script
+
+[source,language='bash']
+----
+$ py collection-submissions.py
+----
+
+Submit the generated zipfile.
+
+== Types of Solutions
+
+Some exercises will have you implement a standalone function, others will expect you to add a new method to arrays.
+Below we explain how to do each.
+
+=== Exporting Functions
+
+If the exercise asks you to define a new function, you will have to export it from `solution.js` so that `tests.js` can "see" it.
+Say you're tasked with defining a function `foo` that returns `5`, you would have to write
+
+[source,language='javascript']
+----
+module.exports.foo = function ()
+{
+  return 5
+};
+----
+
+=== Extending Arrays
+
+Some questions will ask you to add new methods to JavaScript arrays.
+You can achieve this with
+
+[source,language="javascript"]
+----
+Array.prototype.last = function() {
+    return this[this.length - 1];
+}
+
+const xs = [1,2,3,4,5];
+console.log(xs.last()); // prints 5
+----
+
+These extensions need not be exported as they have become an integral part of arrays.
+
+== Functions
+
+In this section we provide a bit of extra background information regarding functions.
+
+=== First Class Functions
+
+A first class value is anything that
+
+* can be stored in a variable;
+* can be passed as paremeter;
+* can be returned as result.
+
+Numbers (integers, floating point numbers), strings, booleans, etc. are (very probably) first class values in all programming languages you know.
+
+Classes, however, are also values.
+You may not see them as such because of your background, but in languages such as Python and Ruby, classes are "things" you can pick up and interact with.
+Similarly, functions are also values, and in most languages, these can be handled like any other value.
+
+[source,language='javascript']
+----
+function foo(x) { /* ... */ }
+
+// We can store the function in a variable
+const bar = foo;
+
+// We can pass it along to another function
+otherFunction(foo);
+
+// We can return it from a function
+function whatever()
+{
+    return foo;
+}
+----
+
+=== Operations
+
+Values on their own are useless.
+What makes them worthwhile is the _operations_ they allow.
+These operations can take different forms:
+
+* Operators, which are typically denoted using special symbols (such as `+`, `-`, `*`, `/`, `&&`, `!`).
+* Functions, e.g., `sqrt(x)`.
+* (In an OO world) Methods, e.g., `x.method()`.
+
+[NOTE,caption="Example"]
+====
+Numbers can be combined using `+`, `-`, `*`, `/`, etc.
+We can compare them using `<`, `>`, `==`, ...
+====
+
+[NOTE,caption="Example"]
+====
+Strings have many operations defined on them, among others:
+
+* Concatenation (e.g., `s1 + s2`)
+* Conversion to uppercase, lowercase (e.g., `s.upper()`)
+* Taking substrings (e.g., `s[:5]` or `s.slice(0, 5)`)
+====
+
+This raises the question, what can we do with functions?
+Most languages offer only the _function call operation_, typically written `f(arg1, arg2, ...)`.
+
+[IMPORTANT]
+====
+Note the difference between
+
+[source,language='javascript']
+----
+function foo() { return 5; }
+
+const x = foo;
+const y = foo();
+----
+
+* `x` contains the function.
+  It is basically an alias for `foo`: `foo()` and `x()` do exactly the same thing.
+* `y` equals `5`, because the right hand side computes result of calling `foo`.
+====
+
+=== Lambdas
+
+A lambda (technically, lambda expression) is a function you didn't bother to give a name.
+JavaScript has multiple syntaxes.
+
+[source,language='javascript']
+----
+// Note the lack of name
+function (x, y) { return x + y; }
+
+// Same using shorter syntax
+(x, y) => x + y
+----
+
+[NOTE]
+====
+The two syntaxes are technically not interchangeable: they have slightly different meanings.
+This is a JavaScript-specific quirk though.
+====
+
+=== Higher Order Functions
+
+A higher order function is nothing more than a function that takes a function as a parameter or returns one.
+The exercises will have you create such functions.
+
+Below we give a few examples.
+
+==== callTwice
+
+[source,language='javascript']
+----
+function callTwice(f)
+{
+  f();
+  f();
+}
+
+// prints 'Hello' twice
+callTwice( () => console.log('Hello') )
+----
+
+==== forEach
+
+[source,language='javascript']
+----
+function forEach(xs, f)
+{
+  for ( const x of xs )
+  {
+    f(x);
+  }
+}
+
+// prints 1 2 3 4 on separate lines
+forEach([1,2,3,4], console.log);
+----
+
+==== double
+
+This is an example of a function _returning_ a function.
+
+[source,language='javascript']
+----
+function double(f)
+{
+  return x => 2 * f(x);
+}
+
+const f = double(x => x + 1);
+
+// Returns 2 * (5 + 1), i.e., 12
+console.log(f(5))
+----

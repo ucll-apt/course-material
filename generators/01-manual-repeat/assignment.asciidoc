@@ -1,0 +1,20 @@
+= Assignment
+
+Create a class `Repeat` that can be used in the following way:
+
+[source,language='python']
+----
+iterator = Repeat(5)
+
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+print(next(iterator))   # 5
+# goes on at infinitum
+----
+
+Implement `Repeat` without relying on generators.
+In other words, you must manually define a `__next__` method.

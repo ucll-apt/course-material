@@ -1,0 +1,124 @@
+= Overview
+
+== Git
+
+=== Git Commands
+
+[.center,options="header",cols="^.^,<3",width="70%"]
+|===
+| Command             | Description
+| `init`              | Create new repository
+| `clone`             | Clone existing repository
+| `add`               | Update staging area
+| `checkout`          | Switch branches, restore files
+| `rm`                | Remove files
+| `mv`                | Move/rename files
+| `diff`              | View differences
+| `commit`            | Commit files
+| `status`            | Repository status
+| `log`               | View history
+| `remote add`        | Add remote
+| `remote set-url`    | Change remote's url
+| `remote rename`     | Rename remote
+| `remote remove`     | Remove remote
+| `fetch`             | Receive updates from remote
+| `pull`              | Fetch and merge
+| `push`              | Send updates to remote
+| `reset`             | Go back in time
+| `branch`            | Create branch
+| `merge`             | Merge branches
+| `clean`             | Remove unversioned files
+| `revert`            | Undo commits without modifying history
+| `rebase`            | Rebase
+| `stash`             | Save files in temporary stash
+| `bisect`            | Find bugs quickly
+| `blame`             | View author of each line
+| `notes`             | Add notes to commits
+| `tag`               | Add tags
+| `reflog`            | View of the past
+|===
+
+=== GitHub
+
+* Forks
+* Pull Requests
+
+== Declarative Programming
+
+* vs imperative
+* Prolog example
+
+== Functional Programming
+
+* Statelessness
+* First class functions
+* Closures
+* Higher order functions
+** `map`
+** `filter`
+** `sort`
+** `min`, `max`
+** `reduce`
+** `count`
+** `partition`
+** `find`
+** `all`/`any`
+* Persistent/ephemeral data structures
+* Memoization
+* Efficiency
+** Some data structures require mutability (hashmaps)
+** No need for copies
+** Simplifies concurrency dramatically
+* Reactive programming
+
+== Metaprogramming
+
+* Compile time vs runtime
+* C++ template metaprogramming
+* Macros
+** Common Lisp, Rust, Elixir
+* Runtime code generation (dynamically typed languages)
+
+== Concurrency and Parallellism
+
+* Difference concurrency and parallellism
+* Memory Model
+* Difficulties
+** Nondeterminism/data races
+** Bugs sometimes occur on in a billion times
+** Deadlocks/livelocks
+** Scalability
+
+=== Locking
+
+* Events, monitors, mutexes, semaphores, condition variables
+
+=== Futures
+
+* Futures
+* Dataflow variables (Oz)
+
+=== Generators
+
+* Python, JavaScript, C#, Kotlin
+
+=== Await/Async
+
+* "Colored" functions
+* Python, C#, 
+
+=== Goroutines, Channels
+
+=== Actors/CSP
+
+* Erlang/Elixir
+
+=== STM
+
+== Quantum Computing
+
+* Einstein vs Bohr, Bell experiment
+* Heisenberg uncertainty principle
+* BB84
+* Interpretations (Copenhagen, Everett, Relational)
+* Math basics

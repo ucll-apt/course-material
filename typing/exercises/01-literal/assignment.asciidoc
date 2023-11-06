@@ -1,0 +1,22 @@
+= Assignment
+
+Add types to the function shown below.
+
+[source,language='javascript']
+----
+function foo(x)
+{
+    return 'qux';
+}
+----
+
+`foo` takes a parameter `x`, but it is only allowed to be `"bar"`.
+No other value is permitted.
+
+`foo` is also guaranteed to return `qux`.
+This needs to be expressed in its return type.
+
+[TIP]
+====
+Literal types.
+====

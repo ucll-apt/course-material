@@ -1,0 +1,51 @@
+= Assignment
+
+Say you have a function
+
+[source,language='javascript']
+----
+function write_to_log(path, message)
+{
+    // Appends message to file with given path
+}
+----
+
+You will typically always log to the same file, meaning you'll always have to specify the same `path` argument.
+
+[source,language='javascript']
+----
+const LOG_PATH = "...";
+
+write_to_log(LOG_PATH, "some message");
+----
+
+To avoid this repetition, it is preferable to create a separate function:
+
+[source,language='javascript']
+----
+function log(message)
+{
+    write_to_log(LOG_PATH, message);
+}
+----
+
+This pattern of having to call a function with the same parameter occurs often.
+(For example, dependency injection fits this pattern.)
+
+Write a function `partial` that can be used to automate this process.
+
+[source,language='javascript']
+----
+const log = partial(write_to_log, LOG_PATH);
+----
+
+It is important to understand that `log(x)` is short for `write_to_log(LOG_PATH, x)`.
+In other words, `partial` allows us to "partially" call a function: we only specify the first parameter, the remaining parameters can be given later.
+In general, we can write
+
+[source,language='javascript']
+----
+const g = partial(f, x);
+
+g(a, b, c) // same as f(x, a, b, c)
+----

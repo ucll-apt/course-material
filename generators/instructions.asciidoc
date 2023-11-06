@@ -1,0 +1,385 @@
+= Instructions
+
+This set of exercises make use of Python's generators.
+
+== Assignment
+
+Solve each exercise.
+Per exercise, write your solution in a file named `solution.py` located in that exercise's directory.
+
+Tests are provided and can be run with
+
+[source,language='bash']
+----
+py tests.py
+----
+
+Use `collect-solutions.py` to create a zip that you submit to Toledo.
+
+== Background
+
+=== Raison d'Etre
+
+Some functions return lists.
+These lists can become quite long, requiring lots of memory.
+Generators allow you to return very long (potentially infinite) lists with very low memory consumption.
+However, there are some limitations.
+
+=== Lists
+
+A list typically offers the following basic functionality:
+
+* Querying its length: `len(xs)`.
+* Indexing: `xs[i]`.
+
+These two operations can be seen as building blocks for all other list operations: with these two you can implement concatenation, filtering, and so on.
+
+=== Iterators
+
+An iterator is like a list in that it represents an ordered sequence of elements, but it has different basic operations.
+Actually, there's only one such basic operation: `next`.
+
+[source,language="python"]
+----
+xs = create_iterator_with_items(1, 2, 3)
+
+# Ask for first element
+first = next(iterator)
+
+# Ask for second element
+second = next(iterator)
+
+# Ask for third element
+third = next(iterator)
+
+# Go beyond end
+next(iterator)
+-> StopIteration exception
+----
+
+[NOTE,caption='example']
+====
+Internally, the `for` loop relies on this `next` operation to iterate over all elements.
+====
+
+Based on this building block (`next`), we can again build list-related functionality such as filtering, concatenation and so on.
+
+=== Lists vs Iterators
+
+Is one container better than the other?
+Or are they equally powerful?
+
+If we are dealing with representing finite sequences, then both are equal:
+
+* We can implement `next` in terms of `len` and indexing, which means that lists are at least as powerful as iterables, since every iterable can be translated into a list.
+  In Python, this conversion already exists: `list(xs)` converts an iterator `xs` to a list.
+* We can implement `len` and indexing in terms of `next`, which means that iterables are at least as powerful as lists.
+  This conversion also already exists: `iter(xs)` converts a list `xs` to an iterator.
+
+From this, we can conclude that lists and iterables are equally powerful as far as finite sequences are concerned.
+With infinite sequences, things become a bit more complicated.
+Suffice it to say that, in Python, lists cannot represent infinitely long whereas iterators can.
+
+So, can we conclude that iterators are inherently better than lists?
+Well, no...
+While an iterator can _do_ anything a list can do, it doesn't necessarily do so as efficiently.
+Whether you want a list or an iterator will depend on that you need to do with them.
+In order to understand which choice to make, we will need to delve further in how iterators work.
+We'll revisit this issue in a later section.
+
+=== Iterables
+
+Iterators, as explained above, have only one basic operation: `next`.
+This has as consequence that once you went through all the items in the sequence, there is no way to reset the iterator to the first element.
+In other words, an iterator is single use.
+
+[source,language='python']
+----
+# First pass
+for item in iterator:
+  # ...
+
+# Second pass: nothing will happen
+for item in iterator:
+  # ...
+----
+
+If you need to iterate over the same sequence multiple times, you need a way to create fresh iterators, i.e., you need some sort of "iterator factory" which you can keep asking fresh iterators of.
+
+[source,language='python']
+----
+iterator = iterator_factory.create_new_iterator()
+
+# First pass
+for item in iterator:
+  # ...
+
+iterator = iterator_factory.create_new_iterator()
+
+# Second pass
+for item in iterator:
+  # ...
+----
+
+This concept of "iterator factory" is called an _iterable_.
+In short,
+
+* An iterable is an object that represents a sequence.
+* You can ask it for an iterator using `iterator = iter(iterable)`.
+* This iterator can be used once to iterate over the elements: `x = next(iterator)`.
+
+[source,language='python']
+----
+# First pass
+for item in iter(iterable):
+  # ...
+
+# Second pass
+for item in iter(iterable):
+  # ...
+----
+
+The `for` loop knows about iterators and iterables and can work with both.
+This means you don't actually need to apply `iter` manually:
+
+[source,language='python']
+----
+for item in iterable:
+  # ...
+
+# is same as
+
+for item in iter(iterable):
+  # ...
+----
+
+== Creating an Iterator
+
+Let's try to create our own iterator.
+We keep it simple and have it represent the sequence `1`, `2`, `3`.
+
+[source,language="python"]
+----
+class MyIterator:
+  def __init__(self):
+    self.__index = 0
+    self.__items = [1, 2, 3]
+
+  def __next__(self):
+    if self.__index < len(self.__items):
+      result = self.__items[self.__index]
+      self.__index += 1
+      return result
+    else:
+      raise StopIteration()
+
+
+it = MyIterator()
+print(next(it))  # 1
+print(next(it))  # 2
+print(next(it))  # 3
+print(next(it))  # StopIteration exception
+----
+
+While this implementation works, it's a bit silly: it simply uses a list internally.
+There is really no benefit to this approach.
+
+Let's make it a bit smarter:
+
+[source,language="python"]
+----
+class MyIterator:
+  def __init__(self):
+    self.__current = 0
+
+  def __next__(self):
+    if self.__current < 3:
+      result = self.__current
+      self.__current += 1
+      return result
+    else:
+      raise StopIteration()
+----
+
+This implementation uses four times less memory: a `MyIterator` object only needs to keep track of a single `__current__` variable.
+Note that if we were to represent longer sequences, e.g., 1 to 1,000,000,000, the memory savings would become even more dramatic.
+
+Admittedly, this implementation isn't particularly elegant.
+Luckily, there's an easier way to create iterators.
+
+== Generators
+
+A _generator_ is a special kind of function that can be used to easily create iterators.
+Let's start with a simple example:
+
+[source,language='python']
+----
+def one_two_three():
+  yield 1
+  yield 2
+  yield 3
+----
+
+Calling this function returns an iterator:
+
+[source,language='python']
+----
+it = one_two_three()
+
+next(it)  # 1
+next(it)  # 2
+next(it)  # 3
+next(it)  # StopIteration exception
+----
+
+Say we want to return a longer sequence:
+
+[source,language='python']
+----
+def one_to_one_million():
+  current = 1
+  while current <= 1000000:
+    print('!')
+    yield current
+    current += 1
+----
+
+=== Execution of a Generator
+
+It is important to realize that a generator does not generate all its items in one go.
+
+[source,language='python']
+----
+it = one_to_one_million()
+
+print(next(it))
+print(next(it))
+----
+
+This is what happens when running the code above:
+
+* You make a call to `one_to_one_million`.
+* `one_to_one_million` runs up until the first `yield` statement.
+  In this example, `1` is yielded.
+* The generator now pauses and returns an iterator object, which is stored in `it`.
+* Calling `next(it)` asks for the value that was yielded (`1`).
+  The generator resumes its execution where it left off: `current += 1`, looping back and then bumping into `yield` again, causing it to pause.
+* The first `next(it)` returns `1`, which is printed.
+* The next line performs `print(next(it))` a second time.
+  Again, the generator will we awakened, perform minimal work, and fall asleep again.
+  This time, it yields `2`.
+
+== Link with Iterables
+
+A generator returns an _iterator_, not an _iterable_.
+This isn't a big problem, since if you need to iterate over the same sequence twice, you simply call the generator twice.
+
+[source,language='python']
+----
+def generator():
+  yield 1
+  yield 2
+  yield 3
+
+# First pass
+for x in generator():
+  # ...
+
+# Second pass
+for x in generator():
+  # ...
+----
+
+== When to Use Iterators/Generators
+
+Generators are typically useful when dealing with large amounts of data, as they allow you to do so with very small memory requirements.
+Do realize, however, that you can only access the data sequentially: if an algorithm needs to move around (e.g., get the 10th element, then the 4th, then the 1000th), an iterator will not be advised, as you will probably have to copy its contents to a regular list.
+
+Many algorithms can also be simplified by using infinite lists.
+You can see the end of a list as a special corner case which your algorithm has to take into account.
+However, an infinite list simply has no such edge case.
+
+For example, say you are given the list `['A', 'B', 'C', 'D', 'E']`, you want to produce the table shown below:
+
+[.center,width="20%",cols=">,<5",stripes=even]
+|===
+| 1 | A
+| 2 | B
+| 3 | C
+| 4 | D
+| 5 | E
+|===
+
+You could achieve this as follows:
+
+[source,language='python']
+----
+def create_table(elements):
+  for index, element, color in zip(count(1), elements, cycle('dark', 'light')):
+    # ...
+----
+
+Here, `count(1)` is a built-in function that produces an infinite sequence `1`, `2`, `3`, ...
+`cycle([x, y, z])` returns an infinite sequence cycling through the given elements: `x`, `y`, `z`, `x`, `y`, `z`, ...
+
+== Generators in Other Languages
+
+=== JavaScript/TypeScript
+
+[source,language='javascript']
+----
+function* mygen()
+{
+  yield 1;
+  yield 2;
+  yield 3;
+}
+----
+
+=== C#
+
+[source,language='csharp']
+----
+IEnumerable<int> MyGen()
+{
+  yield return 1;
+  yield return 2;
+  yield return 3;
+}
+----
+
+=== Ruby
+
+[source,language='ruby']
+----
+def my_gen
+  Enumerable.new do |yielder|
+    yielder.yield 1
+    yielder.yield 2
+    yielder.yield 3
+  end
+end
+----
+
+=== C++
+
+[source,language='cpp']
+----
+generator<int> iota()
+{
+  co_yield 1;
+  co_yield 2;
+  co_yield 3;
+}
+----
+
+=== Kotlin
+
+[source,language='kotlin']
+----
+val sequence = sequence {
+    yield(1)
+    yield(2)
+    yield(3)
+}
+----

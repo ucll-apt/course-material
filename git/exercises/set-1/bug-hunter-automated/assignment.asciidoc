@@ -1,0 +1,34 @@
+= Assignment
+
+The goal of this exercise is to simulate a bug hunt.
+Imagine you discover a bug but you have no clue as to when (= which commit) it was introduced.
+Using `git bisect`, you will have to track down the commit that introduced the bug.
+
+We didn't bother creating a realistic codebase for this exercise.
+Instead, we simply chose to have a single file `file.txt` which has many versions.
+Each version of this file has the same structure:
+
+* The first line is either `CORRECT` or `BUG`.
+* The second line is a unique number.
+
+In its first versions, `file.txt` contains `CORRECT` as its first line.
+However, at some point it switches to `BUG` and stays that way.
+Your mission is to find the first version of `file.txt` that contains `BUG`.
+Once you do, you have to extract its unique number (on its second line) and write that number to a new file named `culprit`.
+Finally, you also need to reset the repository's state to how it was prior to the bisecting process.
+
+[IMPORTANT]
+====
+Your solution must be fully automated.
+It must work on any repository that has the same content as described above.
+====
+
+[IMPORTANT]
+====
+Your entire solution must still fit in a single `.sh` file.
+====
+
+[TIP]
+====
+`git bisect run` is your friend.
+====

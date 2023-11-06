@@ -1,0 +1,62 @@
+# Instructions
+
+## Installing `aptlib`
+
+You'll need to install a Python package first.
+
+[source,language="bash"]
+----
+# In some directory
+$ git clone https://github.com/ucll-apt/aptlib.git
+
+$ cd aptlib
+
+$ pip install -e .
+----
+
+## Modus Operandi
+
+Each directory corresponds to one exercise.
+There are 10 exercises.
+
+First, read the assignment.
+Typically an exercise comes with a `sandbox` directory.
+This is where you'll find the repository (or repositories) on which you'll have to operate.
+
+Solve each exercise using the shell exclusively.
+Most exercises require you to use other commands than just `git` (e.g., `ls`, `cat`, `head`, `tail`, `grep`, ...)
+Create a file `solution.sh` in the exercise directory which contains the commands necessary to accomplish the goal described in the assignment.
+No hardcoding is allowed (except if the assignment explicitly allows it.)
+
+[NOTE]
+====
+The script must assume it starts in the exercise directory.
+The first command will probably be `cd sandbox`.
+====
+
+Each exercise comes with a verification script written in Python.
+If the script ends on a `FAIL`, you will definitely get zero points for that exercise.
+If the scripts produces all ``PASS``es, you _might_ get full score.
+
+[IMPORTANT]
+====
+We suggest that you always start by making a copy of the `sandbox` directory.
+Experiment in the `sandbox` directory itself, as that's where the verification script will examine.
+
+Check your solution as follows:
+
+[source,language="bash"]
+----
+# Assumes you made a copy of sandbox first!
+$ rm -rf sandbox
+$ cp -r sandbox-copy sandbox
+$ source ./solution.sh
+$ py verify.py
+----
+====
+
+## Submitting Your Solutions
+
+Run `collect-solutions.py`.
+This creates a zip file with all your `solution.sh` scripts in it.
+Upload this zip file to Toledo.

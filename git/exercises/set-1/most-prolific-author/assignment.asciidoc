@@ -1,0 +1,16 @@
+= Assignment
+
+Find out who has the most commits on their name in the master branch.
+Write the name (e.g., Alex) in a file 'prolific.txt' located the repository root.
+You can assume there's no tie.
+
+You will need some help from commands other than Git to solve this problem.
+
+[NOTE]
+====
+Okay, it's Alex.
+That's who's got the most commits.
+
+But, simply writing `echo Alex > prolific.txt` will net you zero points.
+Your commands should work on any repository.
+====

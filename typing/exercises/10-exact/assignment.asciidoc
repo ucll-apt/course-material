@@ -1,0 +1,56 @@
+= Assignment
+
+Add types to the function shown below:
+
+[source,language='javascript']
+----
+function exactlyEqual(x, y)
+{
+    for ( const key of Object.keys(x) )
+    {
+        if ( x[key] != y[key] )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+----
+
+The typing must express that `x` and `y` must be objects with exactly the same shape.
+This means that they must have the same keys and each key must be associated with a value of the same type.
+
+[EXAMPLE]
+====
+`{x: 1}` and `{y: 1}` do not have the same shape: they have different keys.
+====
+
+[EXAMPLE]
+====
+`{x: 1}` and `{x: false}` do not have the same shape.
+While they do have the same keys, one object maps `x` to a `number`, while the other maps `x` to a `boolean`.
+====
+
+The difficulty of this exercise lies in the fact that you will have to fight the flexible typing of TypeScript.
+For example, say you use the following typing
+
+[source,language='javascript']
+----
+function exactlyEqual<T>(x : T, y : T)
+----
+
+This allows the following to compile:
+
+[source,language='javascript']
+----
+exactlyEqual({x: 1}, {y: 2})
+----
+
+One way to make this work is to take `T = {}` and see `{x: 1}` and `{y: 2}` as subtypes of `{}`.
+
+[TIP]
+====
+This one is rather difficult, but you can find ready-to-use solutions online.
+Take some time to understand the solution though.
+====

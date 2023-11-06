@@ -1,0 +1,9 @@
+= Assignment
+
+`xs.takeWhile(predicate)` takes elements `x` from `xs` as long as `predicate(x)` returns `true`.
+These elements are returned in a list.
+`xs` remains unchanged.
+
+== Example
+
+`[-2,-1,0,1,2].takeWhile(x => x <= 0)` should return `[-2, -1, 0]`.

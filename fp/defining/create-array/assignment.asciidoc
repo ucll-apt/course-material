@@ -1,0 +1,8 @@
+= Assignment
+
+`createArray(n, f)` creates an array of size `n` where the ``i``th element equals `f(i)`.
+
+== Example
+
+* `createArray(5, i => i)` creates `[0, 1, 2, 3, 4]`.
+* `createArray(5, i => i * 2)` creates `[0, 2, 4, 6, 8]`.

@@ -1,0 +1,39 @@
+= Assignment
+
+`xs.partition(predicate)` returns a list of lists `[left, right]`.
+
+* The list `left` contains all elements for which the function `predicate` returns `true`.
+* The list `right` contains all other elements.
+
+== Example
+
+Say we have a list of children and want to separate the boys from the girls.
+
+[source,language='javascript']
+----
+[ { name: "John", gender: 'male' }
+, { name: "Sophie", gender: 'female' }
+, { name: "Peter", gender: 'male' }
+, { name: "Scott", gender: 'male' }
+, { name: "Anna", gender: 'female' }
+, { name: "Emma", gender: 'female' }
+].partition(child => child.gender === 'male')
+----
+
+should return
+
+[source,language='javascript']
+----
+[
+  [
+    { name: "John", gender: 'male' },
+    { name: "Peter", gender: 'male' },
+    { name: "Scott", gender: 'male' }
+  ],
+  [
+    { name: "Sophie", gender: 'female' },
+    { name: "Anna", gender: 'female' },
+    { name: "Emma", gender: 'female' }
+  ]
+]
+----

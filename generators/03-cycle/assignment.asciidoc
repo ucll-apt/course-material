@@ -1,0 +1,30 @@
+= Assignment
+
+Create a generator `cycle` that can be used in the following way:
+
+[source,language='python']
+----
+iterator = cycle(['x', 'y', 'z'])
+
+print(next(iterator))   # 'x'
+print(next(iterator))   # 'y'
+print(next(iterator))   # 'z'
+print(next(iterator))   # 'x'
+print(next(iterator))   # 'y'
+print(next(iterator))   # 'z'
+print(next(iterator))   # 'x'
+print(next(iterator))   # 'y'
+print(next(iterator))   # 'z'
+# goes on at infinitum
+----
+
+[IMPORTANT]
+====
+Cycle receives an _iterable_ as parameter.
+====
+
+[NOTE]
+====
+`cycle` already exists in `itertools`.
+It speaks for itself you should implement your own version here, but in the future, please make use of the library implementation.
+====

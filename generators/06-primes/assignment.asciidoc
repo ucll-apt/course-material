@@ -1,0 +1,16 @@
+= Assignment
+
+Create a generator `primes` that produces all prime numbers in order:
+
+[source,language='python']
+----
+ns = primes()
+
+next(ns)  # 2
+next(ns)  # 3
+next(ns)  # 5
+next(ns)  # 7
+next(ns)  # 11
+----
+
+Make it efficient enough so that the tests run under 10 seconds.

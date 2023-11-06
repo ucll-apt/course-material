@@ -1,0 +1,60 @@
+= Assignment
+
+Say you have a function
+
+[source,language="javascript"]
+----
+function square(x)
+{
+    return x ** 2;
+}
+----
+
+This function operates on a single number.
+
+[source,language="javascript"]
+----
+square(5)
+----
+
+We would like to apply this function on lists of numbers, i.e., we want to square each number of a list and return the results as a new list.
+This is exactly what the `map` method's job is:
+
+[source,language="javascript"]
+----
+const result = [1, 2, 3, 4].map(square);
+
+// result is now [1, 4, 9, 16]
+----
+
+However, we tire of having to write `.map(square)` each time.
+We would like to create a function `squares` that applies `square` on lists:
+
+[source,language="javascript"]
+----
+const result = squares([1, 2, 3, 4]);
+
+// result is now [1, 4, 9, 16]
+----
+
+We could of course manually define `squares`:
+
+[source,language="javascript"]
+----
+function squares(ns)
+{
+    return ns.map(square);
+}
+----
+
+However, we would like to automate this process of "lifting" a number-function to lists:
+
+[source,language="javascript"]
+----
+const squares = lift(square);
+
+const result = squares([1,2,3,4])
+// result is now [1, 4, 9, 16]
+----
+
+Here, `lift` takes a unary function (i.e., function that takes a single parameter) and transforms it into a function that takes a list of numbers.

@@ -1,0 +1,8 @@
+= Assignment
+
+`xs.reject(predicate)` returns a list of items of `x` for which `predicate` does _emph_ not return `true`.
+
+== Example
+
+* `[-2,-1,0,1,2].reject(x => x >= 0)` should return `[-2, -1]`.
+* `[-2,-1,0,1,2].reject(x => x < 0)` should return `[0, 1, 2]`.

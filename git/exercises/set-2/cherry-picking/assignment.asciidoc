@@ -1,0 +1,20 @@
+= Assignment
+
+The repo contains two branches: `master` and `feature`.
+`feature` branched off of `master` at the second commit and it added a number of commits of its own.
+
+[source]
+----
+*---* master
+    |
+    *---*---*---*--- ... ---*---*---*---* feature
+                            ^       ^
+----
+
+The fourth last and second last commits of the `feature` branch (indicated by `^`) are important.
+We want to copy the changes made by those commits to `master`.
+
+`master` should be extended by two commits:
+
+* The first new commit must apply the same changes as the fourth last commit of `feature`.
+* The second new commit must apply the same changes as the second last commit of `feature`.

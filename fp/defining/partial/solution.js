@@ -1,0 +1,1 @@
+module.exports.partial = (f, x) => (...xs) => f(x, ...xs);

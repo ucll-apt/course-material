@@ -1,0 +1,43 @@
+git flow
+how git works
+.gitignore
+init
+clone
+add
+rm
+mv
+commit amend
+status
+log
+pull
+push
+checkout
+reset
+branch
+merge
+clean
+revert
+remote add set-url
+rebase
+stash
+bisect
+blame
+pull requests
+hooks
+
+conflicts
+checkout --ours, --theirs
+
+
+git ignore plugin
+
+* create new repo
+* add (-n, -a)
+* adding removed file
+* checkout
+* mv
+* rm
+
+
+* Look for bug using bisect
+* Get back old data after git reset (use reflog)

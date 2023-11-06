@@ -1,0 +1,52 @@
+= Assignment
+
+Add types to the following function:
+
+[source,language='javascript']
+----
+function createTester(referenceFunction, testedFunction)
+{
+    return (...args) =>
+    {
+        const actual = testedFunction(...args);
+        const expected = referenceFunction(...args);
+
+        return actual === expected;
+    };
+}
+----
+
+Perhaps some context is necessary to better understand this exercise.
+Say you need to write an algorithm.
+An inefficient version is easy to write, but the efficient version is a whole lot trickier.
+You decide to write both and compare the outcomes.
+Assuming the slow easy version is correct, outcomes being consistently equal would mean that the fast version is also correct.
+
+Usage would be
+
+[source,language='javascript']
+----
+const tester = createTester(slowVersion, fastVersion);
+----
+
+Now, `tester` should be a function that receives inputs, feeds these to both `slowVersion` and `fastVersion`, and compares results.
+If both `slowVersion` and `fastVersion` return the same value, `tester` returns `true`, otherwise `false`.
+
+Checking that the outcomes are equal can be done with
+
+[source,language='javascript']
+----
+assert(tester(inputs1));
+assert(tester(inputs2));
+assert(tester(inputs3));
+assert(tester(inputs4));
+----
+
+The typing of `createTester` must express the following:
+
+* Both `referenceFunction` and `testedFunction` needs to be functions.
+* They both need to accept the same parameters.
+* They both need to return the same value.
+* `createTester` must return a function.
+* This function must accept the same parameters as `referenceFunction` and `testedFunction`.
+* This function must return `true` or `false`.

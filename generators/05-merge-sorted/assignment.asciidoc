@@ -1,0 +1,24 @@
+= Assignment
+
+Create a generator `merge_sorted` that receives two iterators that represent _sorted_ sequences.
+It must merge both sequences into one single sequence, preserving the sorted property.
+
+== Examples
+
+[source,language='python']
+----
+[1, 3, 5]
+[2, 4, 6]
+->
+[1, 2, 3, 4, 5, 6]
+
+[1, 2, 3]
+[4, 5, 6]
+->
+[1, 2, 3, 4, 5, 6]
+
+[1, 1, 2, 2, 3, 3]
+[1, 2, 3]
+->
+[1, 1, 1, 2, 2, 2, 3, 3, 3]
+----
